@@ -4,21 +4,27 @@ import math
 
 def naive(n: int, x: float) -> complex:
     k = x ** 2
-    w = w_k = cmath.rect(1, 4 * math.pi / n)  # w_n ^ 2
+    w_k = cmath.rect(1, 4 * math.pi / n)  # w_n ^ 2
     final = 1
-    for i in range(1, n >> 1):
-        final *= (k - w)
+    w = 1
+    for i in range((n >> 1) - 1):
         w *= w_k
+        final *= (k - w)
     return final
 
 
 def p_n(n: int, x: float) -> float:
-    k = x ** 2
+    k = x ** 2  # 1 operation
+    """
     x_k = 1
-    final = 0
-    for i in range((n >> 1)):  # n + 1 arithmetic operations
-        final += x_k
+    final = 1
+    for i in range((n >> 1) - 1):  # n - 2 arithmetic operations
         x_k *= k
+        final += x_k
+    """
+    final = 1 + k  # 1 operation
+    for i in range((n >> 1) - 2):  # n - 4 operations
+        final = 1 + k * final
     return final
 
 
